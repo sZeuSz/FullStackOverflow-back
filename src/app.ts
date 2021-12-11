@@ -7,6 +7,7 @@ const app = express();
 // app.use(cors());
 app.use(express.json());
 app.post('/questions', questionsController.postQuestion);
+app.get('/questions/:id', questionsController.getQuestionById);
 
 
 export default app;

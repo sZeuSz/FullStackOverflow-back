@@ -26,3 +26,24 @@ export async function postQuestion(req: Request, res: Response) {
         return res.sendStatus(500);
     }
 }
+
+export async function getQuestionById(req: Request, res: Response) {
+    const { id } = req.params;
+    
+    try {
+        if (!id) {
+            return res.status(400).send({ message: 'id não precisa ser definino nos parametros da rota' })
+        }
+
+        const result:null | false | questionBD = await questionService.findQuestionById(id);
+
+        if (!result) {
+            return res.status(404).send({message: 'Infelizmente não foi possível encontrar a questão com esse id :('})
+        }
+
+        return res.status(200).send(result);
+    } catch (error) {
+        console.log(error);
+        return res.sendStatus(500);
+    }
+}
