@@ -1,6 +1,6 @@
 import express from 'express';
 import * as questionsController from './controllers/questionController'
-// import * as usersController from './controllers/userController';
+import * as usersController from './controllers/userController';
 // import cors from "cors";
 import { Request, Response } from 'express';
 const app = express();
