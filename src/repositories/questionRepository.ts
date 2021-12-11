@@ -57,3 +57,47 @@ export async function findQuestionByIdWithAnswer(id: string): Promise<questionBD
     console.log("resultBaixo", result.rows);
     return result.rows[0];
 }
+
+export async function findQuestionsNotAnswered(): Promise<questionBD[]> {
+    
+    const result = await connection.query(`
+        SELECT *
+            FROM questions
+                WHERE answered = false;
+    `);
+
+    return result.rows;
+}
+
+export async function answerQuestionById(answer: answerDB) : Promise<answerDB> {
+    const result = await connection.query(`
+        INSERT INTO answers
+            ("answeredAt", "answeredBy", answer, question_id, user_id)
+                values
+                    (NOW(), $1, $2, $3, $4)
+                        RETURNING id;
+    `, [answer.name, answer.answer, answer.id, answer.user_id]);
+    
+    return result.rows[0];
+}
+
+export async function findUserByToken(token: string): Promise<session> {
+
+    const result = await connection.query(`
+        SELECT *
+            FROM sessions
+                WHERE token = $1;
+    `, [token]);
+    return result.rows[0];
+}
+
+export async function CheckAnsweredQuestion(id: string): Promise<questionBD> {
+    
+    const result = await connection.query(`
+        SELECT *
+            FROM questions
+                WHERE id = $1 AND answered = true
+    `, [id])
+    
+    return result.rows[0];
+}

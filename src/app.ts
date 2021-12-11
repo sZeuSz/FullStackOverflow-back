@@ -8,6 +8,7 @@ const app = express();
 app.use(express.json());
 app.post('/questions', questionsController.postQuestion);
 app.get('/questions/:id', questionsController.getQuestionById);
+app.post('/questions/:id', questionsController.postAnswer);
 
 
 export default app;
