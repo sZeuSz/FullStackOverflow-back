@@ -28,7 +28,6 @@ export async function userSignUp(req: Request, res: Response) {
 
         return res.status(201).send(result);
     } catch (error) {
-        console.log(error);
         return res.sendStatus(500);
     }
 }

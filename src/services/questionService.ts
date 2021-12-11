@@ -17,11 +17,9 @@ export async function findQuestionById(id: string): Promise<questionBD | null> {
     let result: questionBD | null;
 
     if (!answer?.answered) {
-        console.log('bebe')
         result = await questionRepository.findQuestionById(id);
     }
     else {
-        console.log('aqui');
         result = await questionRepository.findQuestionByIdWithAnswer(id);
     }
 

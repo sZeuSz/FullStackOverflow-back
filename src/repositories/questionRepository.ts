@@ -21,7 +21,6 @@ export async function UpdateQuestionById(id: string): Promise<questionBD> {
                 WHERE id = $1
                     RETURNING *
     `, [id]);
-    console.log(result.rows);
     return result.rows[0];
 }
 
@@ -54,7 +53,6 @@ export async function findQuestionByIdWithAnswer(id: string): Promise<questionBD
         WHERE questions.id = $1
     `, [id])
     
-    console.log("resultBaixo", result.rows);
     return result.rows[0];
 }
 

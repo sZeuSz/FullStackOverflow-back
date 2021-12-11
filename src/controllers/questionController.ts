@@ -18,11 +18,9 @@ export async function postQuestion(req: Request, res: Response) {
     
     const result = await questionService.addQuestion(questionObject);
     
-    console.log(result);
     return res.status(201).send(result);
     
     } catch (error) {
-        console.log(error);
         return res.sendStatus(500);
     }
 }
@@ -43,7 +41,6 @@ export async function getQuestionById(req: Request, res: Response) {
 
         return res.status(200).send(result);
     } catch (error) {
-        console.log(error);
         return res.sendStatus(500);
     }
 }
@@ -56,10 +53,8 @@ export async function getQuestions(req: Request, res: Response) {
         if (!result) {
             return res.status(400).send({message: 'Desculpe, nenhuma questão foi encontrada'})
         }
-        console.log(result);
         return res.status(200).send(result);
     } catch (error) {
-        console.log(error);
         return res.sendStatus(500);
     }
 }
@@ -85,7 +80,6 @@ export async function postAnswer(req: Request, res: Response) {
 
         return res.status(201).send({message: 'Pergunta respondida com sucesso! :D'})
     } catch (error) {
-        console.log(error);
         return res.sendStatus(500);
     }
 }
