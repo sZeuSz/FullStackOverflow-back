@@ -48,6 +48,22 @@ export async function getQuestionById(req: Request, res: Response) {
     }
 }
 
+export async function getQuestions(req: Request, res: Response) {
+    try {
+
+        const result = await questionService.findQuestionsNotAnswered();
+        
+        if (!result) {
+            return res.status(400).send({message: 'Desculpe, nenhuma questão foi encontrada'})
+        }
+        console.log(result);
+        return res.status(200).send(result);
+    } catch (error) {
+        console.log(error);
+        return res.sendStatus(500);
+    }
+}
+
 export async function postAnswer(req: Request, res: Response) {
     const token = req.headers.authorization?.replace('Bearer ', '');
     const { id } = req.params;
@@ -73,3 +89,4 @@ export async function postAnswer(req: Request, res: Response) {
         return res.sendStatus(500);
     }
 }
+
