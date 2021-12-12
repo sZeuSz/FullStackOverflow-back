@@ -6,6 +6,7 @@ CREATE TABLE "questions" (
 	"tags" TEXT NOT NULL,
 	"answered" BOOLEAN NOT NULL DEFAULT 'false',
 	"submitAt" DATE NOT NULL,
+	"votes" integer NOT NULL DEFAULT '1',
 	CONSTRAINT "questions_pk" PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE

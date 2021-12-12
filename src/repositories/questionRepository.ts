@@ -99,3 +99,27 @@ export async function CheckAnsweredQuestion(id: string): Promise<questionBD> {
     
     return result.rows[0];
 }
+
+export async function putQuestionUpVote(id: string): Promise<questionBD> {
+    
+    const result = await connection.query(`
+        UPDATE questions
+            SET votes = votes + 1
+                WHERE id = $1
+                    RETURNING votes, id;
+    `, [id]);
+
+    return result.rows[0];
+}
+
+export async function putQuestionDownVote(id: string): Promise<questionBD> {
+    
+    const result = await connection.query(`
+        UPDATE questions
+            SET votes = votes - 1
+                WHERE id = $1
+                    RETURNING votes, id;
+    `, [id]);
+
+    return result.rows[0];
+}

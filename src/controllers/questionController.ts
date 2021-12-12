@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import { question, questionBD } from "../protocols/question";
 import * as questionService from '../services/questionService';
 import { answerDB } from "../protocols/answer";
+import { findQuestionById } from "../repositories/questionRepository";
 
 export async function postQuestion(req: Request, res: Response) {
 
@@ -30,7 +31,7 @@ export async function getQuestionById(req: Request, res: Response) {
     
     try {
         if (!id) {
-            return res.status(400).send({ message: 'id não precisa ser definino nos parametros da rota' })
+            return res.status(400).send({ message: 'id precisa ser definino nos parametros da rota' })
         }
 
         const result:null | false | questionBD = await questionService.findQuestionById(id);
@@ -82,5 +83,41 @@ export async function postAnswer(req: Request, res: Response) {
     } catch (error) {
         return res.sendStatus(500);
     }
+}
+
+
+
+export async function questionUpVote(req: Request, res: Response) {
+    
+    const { id } = req.params;
+
+    if (!id) {
+        return res.status(400).send({ message: 'id precisa ser definito na rota em questão' });
+    }
+
+    const result = await questionService.putQuestionUpVote(id);
+
+    if (!result) {
+        return res.status(404).send({ message: 'infelizmente não foi possível encontrar a pergunta' });
+    }
+
+    return res.status(404).send(result);
+}
+
+export async function questionDownVote(req: Request, res: Response) {
+    
+    const { id } = req.params;
+
+    if (!id) {
+        return res.status(400).send({ message: 'id precisa ser definito na rota em questão' });
+    }
+
+    const result = await questionService.putQuestionDownVote(id);
+
+    if (!result) {
+        return res.status(404).send({ message: 'infelizmente não foi possível encontrar a pergunta' });
+    }
+
+    return res.status(404).send(result);
 }
 

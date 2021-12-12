@@ -60,5 +60,27 @@ export async function findQuestionsNotAnswered() {
         return null;
     }
 
+    return result; 
+}
+
+export async function putQuestionUpVote(id: string) {
+
+    const result: questionBD = await questionRepository.putQuestionUpVote(id);
+
+    if (!result) {
+        return null;
+    }
+
+    return result;
+}
+
+export async function putQuestionDownVote(id: string) {
+
+    const result: questionBD = await questionRepository.putQuestionDownVote(id);
+
+    if (!result) {
+        return null;
+    }
+
     return result;
 }
