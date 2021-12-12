@@ -2,6 +2,7 @@ import { answerDB } from "../protocols/answer";
 import { answeredDB, question, questionBD } from "../protocols/question";
 import { session } from "../protocols/session";
 import * as questionRepository from '../repositories/questionRepository';
+import * as userRepository from '../repositories/userRepository';
 
 export async function addQuestion(question: question) {
     
@@ -45,11 +46,14 @@ export async function answerQuestionById(id: string, answer: string, token: stri
     if (!question) {
         return null;
     }
+    console.log(user.user_id)
 
     const answerObject: answerDB = { id, answer, name: user.name, user_id: user.user_id }
     const result: answerDB = await questionRepository.answerQuestionById(answerObject);
 
-    return result;
+    const amountAnswers = await userRepository.updateUsersCountAnswers(user.user_id);
+
+    return amountAnswers;
 }
 
 export async function findQuestionsNotAnswered() {
@@ -84,3 +88,4 @@ export async function putQuestionDownVote(id: string) {
 
     return result;
 }
+

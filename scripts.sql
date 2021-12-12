@@ -32,6 +32,8 @@ CREATE TABLE "users" (
 	"id" serial NOT NULL,
 	"name" TEXT NOT NULL,
 	"class" TEXT NOT NULL,
+	"answers" integer NOT NULL DEFAULT '0',
+	"points" integer NOT NULL DEFAULT '0',
 	CONSTRAINT "users_pk" PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
@@ -54,8 +56,6 @@ CREATE TABLE "sessions" (
 
 ALTER TABLE "answers" ADD CONSTRAINT "answers_fk0" FOREIGN KEY ("question_id") REFERENCES "questions"("id");
 ALTER TABLE "answers" ADD CONSTRAINT "answers_fk1" FOREIGN KEY ("user_id") REFERENCES "users"("id");
-
-
 ALTER TABLE "sessions" ADD CONSTRAINT "sessions_fk0" FOREIGN KEY ("user_id") REFERENCES "users"("id");
 
 

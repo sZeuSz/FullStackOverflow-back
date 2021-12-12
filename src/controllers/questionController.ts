@@ -2,8 +2,7 @@ import questionSchema from "../schemas/questionSchemas";
 import { Request, Response } from "express";
 import { question, questionBD } from "../protocols/question";
 import * as questionService from '../services/questionService';
-import { answerDB } from "../protocols/answer";
-import { findQuestionById } from "../repositories/questionRepository";
+import { updateCount } from "../protocols/user";
 
 export async function postQuestion(req: Request, res: Response) {
 
@@ -73,14 +72,15 @@ export async function postAnswer(req: Request, res: Response) {
             return res.status(401).send({ message: 'Não autorizado' });
         }
 
-        const result: answerDB | null = await questionService.answerQuestionById(id, answer, token);
-
+        const result: updateCount | null = await questionService.answerQuestionById(id, answer, token);
+        console.log(result);
         if (!result) {
             return res.status(400).send({message : 'Questão com id não encontrada ou usuário não autorizado ou a Questão já foi respondida :('})
         }
 
         return res.status(201).send({message: 'Pergunta respondida com sucesso! :D'})
     } catch (error) {
+        console.log(error);
         return res.sendStatus(500);
     }
 }

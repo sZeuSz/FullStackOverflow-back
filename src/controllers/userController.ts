@@ -31,3 +31,18 @@ export async function userSignUp(req: Request, res: Response) {
         return res.sendStatus(500);
     }
 }
+
+export async function rankingUsers(req: Request, res: Response) {
+
+    try {
+        const result = await userService.getUsersTopTen();
+
+        if (!result) {
+            return res.status(400).send({ message: 'Não há usuários cadastrados ainda' });
+        }
+
+    return res.status(200).send(result);
+    } catch (error) {
+        return res.sendStatus(500);
+    }
+}

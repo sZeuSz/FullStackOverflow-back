@@ -27,3 +27,10 @@ export async function registerUser(user : user) {
 
     return token;
 }
+
+export async function getUsersTopTen() {
+    
+    const result: userDB[] = await userRepository.getUsersTopTen();
+
+    return result;
+}

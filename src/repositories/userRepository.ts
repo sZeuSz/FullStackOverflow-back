@@ -1,6 +1,6 @@
 import connection from "../database/database";
 import { session } from "../protocols/session";
-import { user, userDB } from "../protocols/user";
+import { updateCount, user, userDB } from "../protocols/user";
 
 export async function findUserByName(user: user): Promise<userDB> {
     const result = await connection.query(`
@@ -35,4 +35,28 @@ export async function createSession(session: session): Promise<session> {
     `, [session.token, session.name, session.id]);
     
     return result.rows[0];
+}
+
+export async function getUsersTopTen() : Promise<userDB[]> {
+    
+    const result = await connection.query(`
+        SELECT *
+            FROM users
+                ORDER BY points DESC
+                    LIMIT 10;
+    `);
+
+    return result.rows;
+}
+
+export async function updateUsersCountAnswers(id : string | undefined) : Promise<updateCount> {
+    
+    const result = await connection.query(`
+        UPDATE users
+            SET answers = answers + 1, points = points + 1
+                WHERE id = $1
+                    RETURNING answers, id;
+    `,[id]);
+
+    return result.rows[0];  
 }
