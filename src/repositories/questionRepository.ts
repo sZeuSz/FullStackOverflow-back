@@ -36,7 +36,7 @@ export async function findAnsweredById(id: string) : Promise<answeredDB> {
 
 export async function findQuestionById(id: string): Promise<questionBD> {
     const result = await connection.query(`
-        SELECT *
+        SELECT question, student, class, tags, answered, TO_CHAR("submitAt", 'yyyy-mm-dd HH24:MI ')
             FROM questions
                 WHERE id = $1;
     `, [id]);
@@ -46,7 +46,7 @@ export async function findQuestionById(id: string): Promise<questionBD> {
 
 export async function findQuestionByIdWithAnswer(id: string): Promise<questionBD> {
     const result = await connection.query(`
-    SELECT question, student, class, tags, answered, "submitAt", answers."answeredAt", answers."answeredBy", answers.answer
+    SELECT question, student, class, tags, answered, TO_CHAR("submitAt", 'yyyy-mm-dd HH24:MI ') AS "submitAt", TO_CHAR(answers."answeredAt", 'yyyy-mm-dd HH24:MI ') AS "answeredAt" , answers."answeredBy", answers.answer
         FROM questions
                 JOIN answers
                     ON questions.id = answers.question_id

@@ -47,13 +47,13 @@ export async function answerQuestionById(id: string, answer: string, token: stri
         return null;
     }
     console.log(user.user_id)
-
+    console.log("service, question", question);
     const answerObject: answerDB = { id, answer, name: user.name, user_id: user.user_id }
     const result: answerDB = await questionRepository.answerQuestionById(answerObject);
 
-    const amountAnswers = await userRepository.updateUsersCountAnswers(user.user_id);
+    const amountAnswers = await userRepository.updateUsersCountAnswers(user.user_id, question.votes);
 
-    return amountAnswers;
+    return result;
 }
 
 export async function findQuestionsNotAnswered() {

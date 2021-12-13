@@ -49,14 +49,14 @@ export async function getUsersTopTen() : Promise<userDB[]> {
     return result.rows;
 }
 
-export async function updateUsersCountAnswers(id : string | undefined) : Promise<updateCount> {
+export async function updateUsersCountAnswers(id : string | undefined, votes: number) : Promise<updateCount> {
     
     const result = await connection.query(`
         UPDATE users
-            SET answers = answers + 1, points = points + 1
-                WHERE id = $1
+            SET answers = answers + 1, points = points + (1 * $1)
+                WHERE id = $2
                     RETURNING answers, id;
-    `,[id]);
+    `,[votes, id]);
 
     return result.rows[0];  
 }
