@@ -59,7 +59,7 @@ export async function findQuestionByIdWithAnswer(id: string): Promise<questionBD
 export async function findQuestionsNotAnswered(): Promise<questionBD[]> {
     
     const result = await connection.query(`
-        SELECT *
+        SELECT question, student, class, tags, answered, TO_CHAR("submitAt", 'yyyy-mm-dd HH24:MI ') AS "submitAt"
             FROM questions
                 WHERE answered = false;
     `);
