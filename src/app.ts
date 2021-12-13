@@ -1,15 +1,13 @@
 import express from 'express';
 import * as questionsController from './controllers/questionController'
 import * as usersController from './controllers/userController';
-// import cors from "cors";
-const app = express();
-// app.use(cors());
-app.use(express.json());
+import questionRouter from './routers/questionRouter';
+import userRouter from './routers/userRouter';
 
-app.post('/questions', questionsController.postQuestion);
-app.get('/questions', questionsController.getQuestions);
-app.post('/questions/:id', questionsController.postAnswer);
-app.get('/questions/:id', questionsController.getQuestionById);
-app.post('/users', usersController.userSignUp);
+const app = express();
+
+app.use(express.json());
+app.use(questionRouter);
+app.use(userRouter);
 
 export default app;

@@ -5,7 +5,8 @@ CREATE TABLE "questions" (
 	"class" TEXT NOT NULL,
 	"tags" TEXT NOT NULL,
 	"answered" BOOLEAN NOT NULL DEFAULT 'false',
-	"submitAt" DATE NOT NULL,
+	"submitAt" TIMESTAMP NOT NULL,
+	"votes" integer NOT NULL DEFAULT '1',
 	CONSTRAINT "questions_pk" PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
@@ -15,7 +16,7 @@ CREATE TABLE "questions" (
 
 CREATE TABLE "answers" (
 	"id" serial NOT NULL,
-	"answeredAt" DATE NOT NULL,
+	"answeredAt" TIMESTAMP NOT NULL,
 	"answeredBy" TEXT NOT NULL,
 	"answer" TEXT NOT NULL,
 	"question_id" integer NOT NULL,
@@ -31,6 +32,8 @@ CREATE TABLE "users" (
 	"id" serial NOT NULL,
 	"name" TEXT NOT NULL,
 	"class" TEXT NOT NULL,
+	"answers" integer NOT NULL DEFAULT '0',
+	"points" integer NOT NULL DEFAULT '0',
 	CONSTRAINT "users_pk" PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE

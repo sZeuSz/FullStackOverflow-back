@@ -17,6 +17,7 @@ export interface questionBD{
     tags: string;
     answered: boolean;
     submitAt: string;
+    votes: number;
     answeredAt?: string;
     answeredBy?: string;
     answer?: string;
