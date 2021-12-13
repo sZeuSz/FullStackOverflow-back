@@ -40,7 +40,7 @@ export async function createSession(session: session): Promise<session> {
 export async function getUsersTopTen() : Promise<userDB[]> {
     
     const result = await connection.query(`
-        SELECT *
+        SELECT name, answers, points
             FROM users
                 ORDER BY points DESC
                     LIMIT 10;

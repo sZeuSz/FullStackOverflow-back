@@ -36,7 +36,7 @@ export async function findAnsweredById(id: string) : Promise<answeredDB> {
 
 export async function findQuestionById(id: string): Promise<questionBD> {
     const result = await connection.query(`
-        SELECT question, student, class, tags, answered, TO_CHAR("submitAt", 'yyyy-mm-dd HH24:MI ')
+        SELECT question, student, class, tags, answered, TO_CHAR("submitAt", 'yyyy-mm-dd HH24:MI ') AS "submitAt"
             FROM questions
                 WHERE id = $1;
     `, [id]);
